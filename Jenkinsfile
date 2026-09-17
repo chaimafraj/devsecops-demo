@@ -24,6 +24,14 @@ pipeline {
                 sh './venv/bin/python -m pytest'
             }
         }
+
+        stage('SAST - Bandit') {
+            steps {
+                echo 'Analyse statique de sécurité du code avec Bandit...'
+                sh './venv/bin/pip install bandit'
+                sh './venv/bin/bandit -r . -x ./venv -f txt'
+            }
+        }
     }
 
     post {
